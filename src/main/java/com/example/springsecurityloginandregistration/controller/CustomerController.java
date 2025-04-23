@@ -2,12 +2,14 @@ package com.example.springsecurityloginandregistration.controller;
 
 import com.example.springsecurityloginandregistration.entity.Customer;
 import com.example.springsecurityloginandregistration.service.CustomerService;
+import com.example.springsecurityloginandregistration.service.security.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +21,15 @@ public class CustomerController {
     private AuthenticationManager authenticationManager; //AuthenticationManager
 
     @Autowired
+    private JwtService jwtService;
+
+    @Autowired
     private CustomerService customerService;
+
+    @GetMapping("/welcome")
+    public String welcome() {
+        return "Welcome";
+    }
 
     @PostMapping("/register")
     public ResponseEntity<Object> register(@RequestBody Customer customer) {
@@ -39,7 +49,7 @@ public class CustomerController {
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         boolean isAuthenticated = authentication.isAuthenticated();
         if (isAuthenticated) {
-            return ResponseEntity.status(HttpStatus.OK).body("Customer logged in successfully");
+            return ResponseEntity.status(HttpStatus.OK).body(jwtService.generateToken(customer.getEmail()));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Customer login failed");
         }
