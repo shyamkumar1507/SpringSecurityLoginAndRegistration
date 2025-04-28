@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
 
 @Service
 public class CustomerService {
@@ -27,5 +28,8 @@ public class CustomerService {
         return savedCustomer.getCid() != null;
     }
 
+    public List<Customer> getAllCustomers() {return customerRepository.findAll();}
+
+    public Customer getCustomerByEmail(String email) {return customerRepository.findByEmail(email);}
 
 }

@@ -40,7 +40,7 @@ dependencies {
 }
 
 tasks.withType<JavaCompile> {
-    options.compilerArgs.add("-parameters")
+    options.compilerArgs.add("-parameters") // Enable parameter names in bytecode
 }
 
 tasks.test {

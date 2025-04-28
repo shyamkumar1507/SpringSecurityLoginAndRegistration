@@ -12,3 +12,12 @@ spring:
     user:
       name: user
       password: password
+    permit-all-patterns:
+      - "/register"
+      - "/login"
+      - "/graphql"
+  graphql:
+    graphiql:
+      enabled: true
+      path: "/graphiql"
+      schema-introspection: true

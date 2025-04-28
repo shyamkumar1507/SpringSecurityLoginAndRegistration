@@ -1,0 +1,12 @@
+type Customer {
+    cid: ID,
+    name: String
+    email: String
+    password: String
+    phone: String
+}
+
+type Query {
+    getAllCustomers: [Customer]
+    getCustomerByEmail(email: String): Customer
+}
