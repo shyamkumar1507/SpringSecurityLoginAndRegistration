@@ -29,7 +29,7 @@ public class SecurityConfig {
     @Autowired
     private AppFilter appFilter;
 
-    @Value("@{security.permit-all-patterns}")
+    @Value("${app.security.patternsPermitted}")
     private String[] urlPatternsPermitted;
 
     @Bean
