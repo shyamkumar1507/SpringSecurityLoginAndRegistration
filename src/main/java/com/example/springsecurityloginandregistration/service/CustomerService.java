@@ -23,6 +23,7 @@ public class CustomerService {
 
     public boolean saveCustomer(Customer customer) {
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));
+        //Changes, this is a test to show siddu
          Customer savedCustomer =   customerRepository.save(customer);
         return savedCustomer.getCid() != null;
     }
