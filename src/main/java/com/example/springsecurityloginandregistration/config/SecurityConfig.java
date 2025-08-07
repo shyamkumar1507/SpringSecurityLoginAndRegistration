@@ -3,6 +3,7 @@ package com.example.springsecurityloginandregistration.config;
 import com.example.springsecurityloginandregistration.filter.AppFilter;
 import com.example.springsecurityloginandregistration.service.security.CustomerDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,10 +29,13 @@ public class SecurityConfig {
     @Autowired
     private AppFilter appFilter;
 
+    @Value("${app.security.patternsPermitted}")
+    private String[] urlPatternsPermitted;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
             http.authorizeHttpRequests((req) -> {
-                req.requestMatchers("/register", "/login").permitAll()
+                req.requestMatchers(urlPatternsPermitted).permitAll()
                         .anyRequest().authenticated();
             }).csrf(AbstractHttpConfigurer::disable)
                     .authenticationProvider(authenticationProvider())
